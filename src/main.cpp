@@ -34,6 +34,8 @@ uint8_t data2[] = {
 void setup() {
   spt.init(SER, CLK, RCLK);
   spt.setup();
+  pinMode(12, OUTPUT);
+  digitalWrite(12, LOW);
 }
 
 void loop() {
@@ -41,4 +43,7 @@ void loop() {
   delay(1000);
   spt.send(data2, 8);
   delay(1000);
+  digitalWrite(12, HIGH);
+  delay(1000);
+  digitalWrite(12, LOW);
 }
