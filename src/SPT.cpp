@@ -16,7 +16,7 @@ void SPT::setup() {
   digitalWrite(SPT::RCLK, LOW);
 }
 
-void SPT::send(uint8_t data[], int n) {
+void SPT::send(const uint8_t data[], int n) {
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < 8; j++) {
       boolean status = data[i] >> j & 0b00000001;

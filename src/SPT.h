@@ -8,5 +8,5 @@ class SPT {
 
     void init(uint8_t SER, uint8_t CLK, uint8_t RCLK);
     void setup();
-    void send(uint8_t data[], int n);
+    void send(const uint8_t data[], int n);
 };

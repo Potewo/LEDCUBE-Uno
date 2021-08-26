@@ -2,3 +2,4 @@
 .clangd
 .vim
 compile_commands.json
+.vscode
