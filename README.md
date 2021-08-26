@@ -1,6 +1,6 @@
-# LEDCUBE-Uno
+# LEDCUBE-client
 
-A LEDCUBE program for Arduino Uno.
+A LEDCUBE program for STM32 NUCLEO-F446RE.
 
 ## Wiring
 GND, 5V, SER, CLK(SERCLK), RCLK
