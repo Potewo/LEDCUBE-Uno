@@ -3,7 +3,7 @@
 #include <SPT.h>
 
 #define SER 8
-#define CLK 9
+#define CLK 2
 #define RCLK 10
 
 SPT spt;
@@ -61,7 +61,7 @@ void setup() {
   for (int i = 0; i < cathodsn; i++) {
     pinMode(cathods[i], OUTPUT);
   }
-  for (int i = 0; i < 16; i++) {
+  for (int i = 0; i < 64; i++) {
     spt.send(d, 8);
   }
   for (int i = 0; i < 8; i++) {

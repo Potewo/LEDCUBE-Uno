@@ -4,3 +4,5 @@ A LEDCUBE program for STM32 NUCLEO-F446RE.
 
 ## Wiring
 GND, 5V, SER, CLK(SERCLK), RCLK
+
+GND, 5V, 8, 9, 10

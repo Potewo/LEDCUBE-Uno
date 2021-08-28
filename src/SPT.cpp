@@ -19,13 +19,15 @@ void SPT::setup() {
 void SPT::send(const uint8_t data[], int n) {
   digitalWrite(SPT::RCLK, LOW);
   for (int i = 0; i < 8; i++) {
-    // for (int j = 0; j < 8; j++) {
-    //   // uint8_t status = data[i] >> j & 0b00000001;
-    //   digitalWrite(SPT::SER, !!(data[i] & (1L << j)));
-    //   digitalWrite(SPT::CLK, HIGH);
-    //   digitalWrite(SPT::CLK, LOW);
-    // }
-    shiftOut(SPT::SER, SPT::CLK, LSBFIRST, data[i]);
+    for (int j = 0; j < 8; j++) {
+      // uint8_t status = data[i] >> j & 0b00000001;
+      digitalWrite(SPT::SER, !!(data[i] & (1L << j)));
+      digitalWrite(SPT::CLK, HIGH);
+      /* delay(1); */
+      digitalWrite(SPT::CLK, LOW);
+    }
+    /* shiftOut(SPT::SER, SPT::CLK, LSBFIRST, data[i]); */
   }
   digitalWrite(SPT::RCLK, HIGH);
+  /* digitalWrite(SPT::RCLK, LOW); */
 }
