@@ -23,7 +23,6 @@ void SPT::send(const uint8_t data[], int n) {
       // uint8_t status = data[i] >> j & 0b00000001;
       digitalWrite(SPT::SER, !!(data[i] & (1L << j)));
       digitalWrite(SPT::CLK, HIGH);
-      /* delay(1); */
       digitalWrite(SPT::CLK, LOW);
     }
     /* shiftOut(SPT::SER, SPT::CLK, LSBFIRST, data[i]); */

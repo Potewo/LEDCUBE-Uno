@@ -3,7 +3,7 @@
 #include <SPT.h>
 
 #define SER 8
-#define CLK 2
+#define CLK 9
 #define RCLK 10
 
 SPT spt;
@@ -49,14 +49,14 @@ const int cathodsn = sizeof(cathods) / sizeof(cathods[0]);
 
 void onPacketReceived(const uint8_t* buffer, size_t size);
 
-uint8_t buf[8][8];
+uint8_t buf[64];
 size_t buf_size = 8;
 
 void setup() {
   delay(1000);
   spt.init(SER, CLK, RCLK);
   spt.setup();
-  ps.begin(115200);
+  ps.begin(9600);
   ps.setPacketHandler(&onPacketReceived);
   for (int i = 0; i < cathodsn; i++) {
     pinMode(cathods[i], OUTPUT);
@@ -66,7 +66,7 @@ void setup() {
   }
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
-      buf[i][j] = data[i][j];
+      buf[8*i+j] = data[i][j];
     }
   }
 }
@@ -76,16 +76,16 @@ void loop() {
   if (ps.overflow()) {
   }
   for (int i = 0; i < cathodsn; i++) {
-    spt.send(buf[i], buf_size);
+    spt.send(buf + i*8, buf_size);
     digitalWrite(cathods[i], HIGH);
-    delay(2);
+    delay(1);
     digitalWrite(cathods[i], LOW);
   }
 }
 
 void onPacketReceived(const uint8_t* buffer, size_t size) {
   for (int i = 0; i < size; i++) {
-    buf[i/8][i%8] = buffer[i];
+    buf[i] = buffer[i];
   }
   /* spt.send(buffer, size); */
 }
