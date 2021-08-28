@@ -9,6 +9,8 @@
 SPT spt;
 PacketSerial ps;
 
+uint8_t d[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
 uint8_t data[8][8] = {
   {0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55}, 
   {0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55}, 
@@ -47,8 +49,8 @@ const int cathodsn = sizeof(cathods) / sizeof(cathods[0]);
 
 void onPacketReceived(const uint8_t* buffer, size_t size);
 
-uint8_t buf[8][64];
-size_t buf_size = 0;
+uint8_t buf[8][8];
+size_t buf_size = 8;
 
 void setup() {
   delay(1000);
@@ -57,8 +59,15 @@ void setup() {
   ps.begin(115200);
   ps.setPacketHandler(&onPacketReceived);
   for (int i = 0; i < cathodsn; i++) {
-    spt.send(data[i], 8);
     pinMode(cathods[i], OUTPUT);
+  }
+  for (int i = 0; i < 16; i++) {
+    spt.send(d, 8);
+  }
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j < 8; j++) {
+      buf[i][j] = data[i][j];
+    }
   }
 }
 
@@ -68,16 +77,15 @@ void loop() {
   }
   for (int i = 0; i < cathodsn; i++) {
     spt.send(buf[i], buf_size);
-    digitalWrite(cathods[i], LOW);
-    delay(2);
     digitalWrite(cathods[i], HIGH);
+    delay(2);
+    digitalWrite(cathods[i], LOW);
   }
 }
 
 void onPacketReceived(const uint8_t* buffer, size_t size) {
-  buf_size = 64;
   for (int i = 0; i < size; i++) {
-    buf[i/64][i%64] = buffer[i];
+    buf[i/8][i%8] = buffer[i];
   }
-  spt.send(buffer, size);
+  /* spt.send(buffer, size); */
 }
