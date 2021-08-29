@@ -84,8 +84,5 @@ void loop() {
 }
 
 void onPacketReceived(const uint8_t* buffer, size_t size) {
-  for (int i = 0; i < size; i++) {
-    buf[i] = buffer[i];
-  }
-  /* spt.send(buffer, size); */
+  memcpy(buf, buffer, size);
 }
