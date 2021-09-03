@@ -56,7 +56,7 @@ void setup() {
   delay(1000);
   spt.init(SER, CLK, RCLK);
   spt.setup();
-  ps.begin(9600);
+  ps.begin(115200);
   ps.setPacketHandler(&onPacketReceived);
   for (int i = 0; i < cathodsn; i++) {
     pinMode(cathods[i], OUTPUT);
